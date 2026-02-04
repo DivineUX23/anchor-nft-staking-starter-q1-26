@@ -20,6 +20,7 @@ pub struct Unstake<'info> {
         constraint = asset.owner == &CORE_PROGRAM_ID,
         constraint = !asset.data_is_empty()
     )]
+    /// CHECK: Verified by mpl-core
     pub asset: UncheckedAccount<'info>,
 
     #[account(
@@ -27,6 +28,7 @@ pub struct Unstake<'info> {
         constraint = collection.owner == &CORE_PROGRAM_ID,
         constraint = !collection.data_is_empty()
     )]
+    /// CHECK: Verified by mpl-core
     pub collection: UncheckedAccount<'info>,
 
     #[account(
@@ -51,6 +53,7 @@ pub struct Unstake<'info> {
     pub user_account: Account<'info, UserAccount>,
 
     #[account(address = CORE_PROGRAM_ID)]
+    /// CHECK: Verified by mpl-core 
     pub core_program: UncheckedAccount<'info>,
 
     pub system_program: Program<'info, System>,
@@ -58,7 +61,7 @@ pub struct Unstake<'info> {
 
 impl<'info> Unstake<'info> {
     pub fn unstake(&mut self) -> Result<()> {
-        let time_elapsed = (Clock::get()?.unix_timestamp - self.stake_account.staked_at / 86400) as u32;
+        let time_elapsed = ((Clock::get()?.unix_timestamp - self.stake_account.staked_at) / 86400) as u32;
         require!(
             time_elapsed > self.config.freeze_period,
             StakeError::FreezePeriodNotPassed

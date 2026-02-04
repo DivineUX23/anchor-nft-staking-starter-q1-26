@@ -1,6 +1,6 @@
 use anchor_lang::prelude::*;
 use mpl_core::{
-    ID as CORE_PROGRAM_ID, collection, instructions::AddPluginV1CpiBuilder, types::{FreezeDelegate, Plugin, PluginAuthority}
+    ID as CORE_PROGRAM_ID, instructions::AddPluginV1CpiBuilder, types::{FreezeDelegate, Plugin, PluginAuthority}
 };
 
 use crate::{
@@ -19,6 +19,7 @@ pub struct Stake<'info> {
         constraint = asset.owner == &CORE_PROGRAM_ID,
         constraint = !asset.data_is_empty()
     )]
+    /// CHECK: Verified by mpl-core
     pub asset: UncheckedAccount<'info>,
 
     #[account(
@@ -26,6 +27,7 @@ pub struct Stake<'info> {
         constraint = collection.owner == &CORE_PROGRAM_ID,
         constraint = !collection.data_is_empty()
     )]
+    /// CHECK: Verified by mpl-core
     pub collection: UncheckedAccount<'info>,
 
     #[account(
@@ -51,6 +53,7 @@ pub struct Stake<'info> {
 
 
     #[account(address = CORE_PROGRAM_ID)]
+    /// CHECK: Verified by mpl-core
     pub core_program: UncheckedAccount<'info>,
     pub system_program: Program<'info, System>,
 }

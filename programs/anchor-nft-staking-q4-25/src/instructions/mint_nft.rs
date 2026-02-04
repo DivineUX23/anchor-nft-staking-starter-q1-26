@@ -16,6 +16,7 @@ pub struct MintNft<'info> {
         mut,
         constraint = asset.data_is_empty() @ StakeError::AssetAlreadyInitialized
     )]
+    /// CHECK: Verified by mpl-core: must be an initialized asset owned by CORE_PROGRAM_ID
     pub asset: Signer<'info>,
 
     #[account(
